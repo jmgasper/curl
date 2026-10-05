@@ -24,6 +24,12 @@
 
 #include "curl_setup.h"
 
+#ifdef __HAIKU__
+/* Haiku accepts SOCK_NONBLOCK in socket() and reports O_NONBLOCK, but the
+   socket still blocks in connect() and recv(); use fcntl() instead. */
+#undef SOCK_NONBLOCK
+#endif
+
 #ifdef HAVE_NETINET_IN_H
 #include <netinet/in.h> /* <netinet/tcp.h> may need it */
 #endif
